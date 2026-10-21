@@ -1,0 +1,630 @@
+/* ===== Variáveis: mude cores e fontes do site inteiro aqui =====
+   Paleta inspirada na pedra portuguesa do calçadão carioca:
+   basalto (pedra escura) e calcário (pedra clara). */
+:root {
+  --basalto: #1c1d1f;        /* fundo da página */
+  --basalto-claro: #26272a;  /* fundo de blocos */
+  --calcario: #edeae3;       /* texto principal */
+  --pedra: #8c8a85;          /* texto secundário */
+  --linha: #34353a;          /* linhas divisórias */
+  --accent: #61dafb;         /* azul do React: só em links e foco */
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+
+  --max-width: 1180px;
+  --gutter: clamp(20px, 5vw, 48px);
+  --header-height: 68px;
+}
+
+/* ===== Base ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Faz as âncoras pararem abaixo do menu fixo */
+  scroll-padding-top: var(--header-height);
+}
+
+body {
+  margin: 0;
+  /* Permite medir a largura útil da página (sem a barra de rolagem) com "cqw" */
+  container-type: inline-size;
+  background: var(--basalto);
+  color: var(--calcario);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Contorno visível ao navegar com o teclado */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ===== Cabeçalho fixo ===== */
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  height: var(--header-height);
+  background: rgba(28, 29, 31, 0.88);
+  backdrop-filter: blur(10px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.header-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--calcario);
+}
+
+.header-name:hover {
+  text-decoration: none;
+}
+
+.nav ul {
+  display: flex;
+  gap: 28px;
+}
+
+.nav a {
+  color: var(--pedra);
+}
+
+.nav a:hover {
+  color: var(--calcario);
+  text-decoration: none;
+}
+
+.menu-button {
+  display: none;
+  background: none;
+  border: 1px solid var(--linha);
+  border-radius: 4px;
+  color: var(--calcario);
+  padding: 6px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ===== Hero ===== */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* Ocupa a tela toda, mas não estica demais em monitores muito altos */
+  min-height: min(100svh, 980px);
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Alinha o texto com o .container das outras seções */
+  padding: calc(var(--header-height) + 48px) var(--gutter) 64px
+    max(var(--gutter), calc((100cqw - var(--max-width)) / 2 + var(--gutter)));
+}
+
+.hero-greeting {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--pedra);
+  height: 2.2rem;
+  margin-bottom: 8px;
+}
+
+/* A palavra entra suavemente cada vez que muda */
+.hero-greeting span {
+  display: inline-block;
+  animation: greeting-in 0.6s ease-out;
+}
+
+@keyframes greeting-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.4em);
+  }
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(3rem, 7.5vw, 6.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  margin-bottom: 28px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.hero-tagline {
+  color: var(--pedra);
+  max-width: 44ch;
+  margin-bottom: 36px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-media {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Foto e bloco de iniciais ocupam exatamente o mesmo espaço */
+.hero-photo,
+.hero-initials {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-photo {
+  object-fit: cover;
+  object-position: 50% 20%;
+  filter: grayscale(100%) contrast(1.05);
+  /* Funde as bordas da foto com o fundo da página */
+  mask-image: linear-gradient(to right, transparent, #000 28%);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 28%);
+}
+
+.hero-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--basalto-claro);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(5rem, 14vw, 11rem);
+  color: var(--linha);
+}
+
+/* ===== Botões ===== */
+.button {
+  display: inline-block;
+  padding: 13px 24px;
+  border-radius: 4px;
+  font-weight: 700;
+  border: 2px solid var(--calcario);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.button:hover {
+  text-decoration: none;
+}
+
+.button-primary {
+  background: var(--calcario);
+  color: var(--basalto);
+}
+
+.button-primary:hover {
+  background: transparent;
+  color: var(--calcario);
+}
+
+.button-secondary {
+  color: var(--calcario);
+}
+
+.button-secondary:hover {
+  background: var(--calcario);
+  color: var(--basalto);
+}
+
+/* ===== Faixa de pedra portuguesa (ondas de Copacabana) ===== */
+.wave {
+  display: block;
+  width: 100%;
+  height: 96px;
+}
+
+.wave-stone {
+  fill: var(--calcario);
+}
+
+/* ===== Seções ===== */
+.section {
+  padding: clamp(72px, 10vw, 128px) 0;
+}
+
+.section + .section {
+  border-top: 1px solid var(--linha);
+}
+
+/* Título numa coluna estreita à esquerda, conteúdo à direita */
+.section-grid {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) 3fr;
+  gap: 32px 64px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* ===== Sobre ===== */
+.about-lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  max-width: 30ch;
+  margin-bottom: 28px;
+}
+
+.about-text p {
+  color: var(--pedra);
+  max-width: 62ch;
+}
+
+.about-text p + p {
+  margin-top: 16px;
+}
+
+/* ===== Formação ===== */
+.education-item {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 4px 24px;
+  margin-bottom: 56px;
+}
+
+.education-period {
+  color: var(--pedra);
+  padding-top: 6px;
+}
+
+.education-item h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.education-item p {
+  color: var(--pedra);
+}
+
+.course-list li {
+  display: grid;
+  grid-template-columns: 9rem 1fr auto;
+  gap: 4px 24px;
+  padding: 14px 0;
+  border-top: 1px solid var(--linha);
+}
+
+.course-year,
+.course-provider {
+  color: var(--pedra);
+}
+
+/* ===== Projetos ===== */
+.project-list li {
+  border-top: 1px solid var(--linha);
+}
+
+.project-list li:last-child {
+  border-bottom: 1px solid var(--linha);
+}
+
+.project {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 32px;
+  padding: 32px 0;
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.project-year {
+  color: var(--pedra);
+  padding-top: 6px;
+}
+
+.project-description {
+  grid-column: 1 / -1;
+  color: var(--pedra);
+  max-width: 60ch;
+}
+
+.project-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+.project-tags {
+  color: var(--calcario);
+}
+
+.project-status {
+  color: var(--pedra);
+  font-style: italic;
+}
+
+.project-subdomain {
+  color: var(--pedra);
+}
+
+/* ===== Habilidades ===== */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 32px;
+  margin-bottom: 72px;
+}
+
+.skills dt {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.skills dd {
+  color: var(--pedra);
+  padding: 3px 0;
+}
+
+.skill-note {
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* ===== Idiomas: o nível é desenhado como pedras ===== */
+.language-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4px 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--linha);
+}
+
+.language-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.language-level {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--pedra);
+}
+
+.stones {
+  display: flex;
+  gap: 5px;
+}
+
+/* Cada pedra é um quadradinho levemente torto, como na calçada */
+.stone {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--linha);
+  transform: rotate(-4deg);
+}
+
+.stone:nth-child(2) {
+  transform: rotate(5deg);
+}
+
+.stone.filled {
+  background: var(--calcario);
+}
+
+/* ===== Contato ===== */
+.contact-intro {
+  color: var(--pedra);
+  max-width: 52ch;
+  margin-bottom: 24px;
+}
+
+.contact-email {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 4.2vw, 3rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--calcario);
+  word-break: break-word;
+  margin-bottom: 40px;
+}
+
+.contact-email:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 48px;
+}
+
+.contact-links span {
+  display: block;
+  color: var(--pedra);
+  font-size: 0.9rem;
+}
+
+/* ===== Rodapé ===== */
+.footer {
+  padding: 32px 0 40px;
+  color: var(--pedra);
+  font-size: 0.9rem;
+}
+
+.footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* ===== Tablet e celular ===== */
+@media (max-width: 860px) {
+  .menu-button {
+    display: block;
+  }
+
+  /* Menu vira uma lista que abre embaixo do cabeçalho */
+  .nav {
+    display: none;
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background: var(--basalto);
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .nav.open {
+    display: block;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 8px var(--gutter) 16px;
+  }
+
+  .nav a {
+    display: block;
+    padding: 10px 0;
+  }
+
+  /* Foto em cima, texto embaixo */
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero-media {
+    order: -1;
+    height: 62svh;
+    min-height: 360px;
+  }
+
+  .hero-photo {
+    mask-image: linear-gradient(to bottom, #000 60%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent);
+  }
+
+  .hero-text {
+    padding: 0 var(--gutter) 56px;
+    margin-top: -64px;
+    position: relative;
+  }
+
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-actions .button {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .education-item,
+  .course-list li {
+    grid-template-columns: 1fr;
+  }
+
+  .language-list li {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Quem pede menos movimento no sistema não vê animações */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-greeting span {
+    animation: none;
+  }
+}
