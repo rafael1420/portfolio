@@ -1,0 +1,81 @@
+# Publica o site na Hostinger a cada push na branch main.
+# O GitHub gera a pasta dist/ com "npm run build" e envia o conteúdo por FTP.
+#
+# Configure em Settings > Secrets and variables > Actions > New repository secret:
+#   FTP_SERVER      endereço do servidor FTP (ex.: ftp.rafaelgomes.site)
+#   FTP_USERNAME    usuário de uma conta FTP que aponta para a pasta public_html
+#   FTP_PASSWORD    senha dessa conta FTP
+# Opcional:
+#   FTP_REMOTE_DIR  pasta de destino no servidor (padrão: a pasta inicial da conta FTP)
+
+name: Deploy na Hostinger
+
+on:
+  push:
+    branches: [main]
+  # Permite rodar manualmente pela aba Actions
+  workflow_dispatch:
+
+# Se dois pushes acontecerem seguidos, o deploy mais antigo é cancelado
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v7
+
+      - name: Instalar o Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar a versão final (dist/)
+        run: npm run build
+
+      - name: Verificar se o FTP está configurado
+        id: check
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        run: |
+          if [ -z "$FTP_SERVER" ]; then
+            echo "::warning::Secrets de FTP não configurados. O build passou, mas o deploy foi pulado."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Instalar o lftp
+        if: steps.check.outputs.ready == 'true'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Enviar para a Hostinger
+        if: steps.check.outputs.ready == 'true'
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          # O lftp lê a senha desta variável (--env-password), assim ela nunca aparece no comando
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR || './' }}
+        # ftp:ssl-allow: usa conexão criptografada (FTPS) quando o servidor oferece.
+        # ssl:verify-certificate no: o certificado do FTP da Hostinger costuma ser emitido
+        # para outro nome de servidor; sem isso a conexão criptografada seria recusada.
+        # mirror --reverse: copia a pasta local dist/ para o servidor.
+        # Sem --delete de propósito: nada que já está no servidor é apagado.
+        # Aqui isso é essencial, porque as pastas dos subdomínios (ex.: public_html/cambio)
+        # ficam dentro de public_html e seriam apagadas junto.
+        run: |
+          lftp -u "$FTP_USERNAME" --env-password "$FTP_SERVER" -e "
+            set ftp:ssl-allow true;
+            set ssl:verify-certificate no;
+            set net:max-retries 2;
+            mirror --reverse --verbose --parallel=4 dist/ $FTP_REMOTE_DIR;
+            quit
+          "
