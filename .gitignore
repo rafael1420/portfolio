@@ -1,0 +1,15 @@
+# Gerados pelo npm e pelo build
+node_modules
+dist
+
+# Arquivos do macOS
+.DS_Store
+
+# Originais: o site usa as cópias em public/ (curriculo.pdf e foto.jpg)
+Rafael Gomes 2026.pptx.pdf
+Rafael.png
+
+# Skills do Claude Code (ferramenta local, não faz parte do site)
+.agents
+.claude
+skills-lock.json
