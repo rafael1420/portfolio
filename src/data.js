@@ -3,7 +3,7 @@
 // Os trechos marcados com ✏️ são textos para você deixar com a sua cara.
 
 export const profile = {
-  name: 'Rafael Gomes da Silva',
+  name: 'Rafael Gomes',
   shortName: 'Rafael Gomes',
   initials: 'RG',
   // A saudação alterna entre os idiomas que você fala

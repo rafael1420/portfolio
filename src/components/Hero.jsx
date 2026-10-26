@@ -21,7 +21,7 @@ function Hero() {
           {/* O atributo "download" faz o navegador baixar em vez de abrir */}
           <a
             href={profile.resume}
-            download="Rafael Gomes da Silva - Currículo.pdf"
+            download="Rafael Gomes - Currículo.pdf"
             className="button button-secondary"
           >
             Baixar currículo
