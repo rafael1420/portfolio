@@ -54,6 +54,7 @@ export const courses = [
 // Para adicionar um projeto, copie um objeto e altere os campos.
 // - link: endereço do projeto publicado (ex.: 'https://tarefas.rafaelgomes.site')
 // - repo: link do código no GitHub
+// - image: captura de tela do projeto, salva em public/projetos/ (800x500)
 // - status: deixe '' quando o projeto estiver publicado, ou 'Em desenvolvimento'
 // Deixe '' (vazio) nos campos que ainda não tiver.
 export const projects = [
@@ -63,6 +64,7 @@ export const projects = [
     description: 'Espaço de notas, ideias e projetos no estilo do Notion, com conta própria protegida por login e senha.',
     tags: ['React', 'Node.js', 'JavaScript'],
     link: 'https://nock.rafaelgomes.site',
+    image: '/projetos/nock.jpg',
     repo: '',
     status: '',
   },
@@ -72,6 +74,7 @@ export const projects = [
     description: 'Bolão entre amigos: cada grupo dá palpites nas rodadas dos campeonatos, ganha pontos pelos acertos e disputa o ranking.',
     tags: ['PHP', 'MySQL', 'CSS'],
     link: 'https://bolao.rafaelgomes.site',
+    image: '/projetos/bolao.jpg',
     repo: '',
     status: '',
   },
@@ -81,6 +84,7 @@ export const projects = [
     description: 'Relógio com os fusos horários de várias cidades e o clima de cada uma, que também lê a hora e o clima em voz alta.',
     tags: ['JavaScript', 'API', 'CSS'],
     link: 'https://fuso.rafaelgomes.site',
+    image: '/projetos/fuso.jpg',
     repo: '',
     status: '',
   },
@@ -90,6 +94,7 @@ export const projects = [
     description: 'Transforma textos e links em QR Codes com tamanho, cores e correção de erro ajustáveis, para baixar em PNG ou SVG.',
     tags: ['JavaScript', 'API', 'CSS'],
     link: 'https://qrcode.rafaelgomes.site',
+    image: '/projetos/qrcode.jpg',
     repo: '',
     status: '',
   },

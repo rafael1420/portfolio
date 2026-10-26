@@ -1,39 +1,65 @@
-// Uma linha da lista de projetos. Recebe os dados de um item do array "projects".
-function ProjectItem({ project }) {
-  // Mostra o endereço sem "https://", ex.: tarefas.rafaelgomes.site
+// Um projeto da lista. Recebe os dados de um item do array "projects".
+// "compact" mostra só o texto, sem a janela com a captura de tela.
+function ProjectItem({ project, compact = false }) {
+  // Mostra o endereço sem "https://", ex.: nock.rafaelgomes.site
   const address = project.link.replace(/^https?:\/\//, '')
-  const isLive = project.link && !project.status
+
+  if (compact) {
+    return (
+      <article className="project-compact">
+        <h4>{project.title}</h4>
+        <span className="project-year">{project.year}</span>
+        <p>{project.description}</p>
+        <div className="project-meta">
+          <span>{project.tags.join(', ')}</span>
+          {project.status && <span className="project-status">{project.status}</span>}
+          {project.repo && (
+            <a href={project.repo} target="_blank" rel="noreferrer">
+              Ver código
+            </a>
+          )}
+        </div>
+      </article>
+    )
+  }
 
   return (
     <article className="project">
-      <h3 className="project-title">
-        {/* O título só vira link quando o projeto já está publicado */}
-        {isLive ? (
+      {/* A "janela" imita o navegador: a barra mostra o endereço real do projeto */}
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noreferrer"
+        className="project-window"
+        aria-label={`Abrir ${project.title} em ${address}`}
+      >
+        <span className="project-window-bar">{address}</span>
+        {project.image ? (
+          <img src={project.image} alt="" width="800" height="500" loading="lazy" />
+        ) : (
+          <span className="project-window-empty">{project.title}</span>
+        )}
+      </a>
+
+      <div className="project-text">
+        <h3 className="project-title">
           <a href={project.link} target="_blank" rel="noreferrer">
             {project.title}
           </a>
-        ) : (
-          project.title
-        )}
-      </h3>
-      <span className="project-year">{project.year}</span>
-
-      <p className="project-description">{project.description}</p>
-
-      <div className="project-meta">
-        <span className="project-tags">{project.tags.join(', ')}</span>
-        {project.status && <span className="project-status">{project.status}</span>}
-        {address && !isLive && <span className="project-subdomain">{address}</span>}
-        {isLive && (
+        </h3>
+        <span className="project-year">{project.year}</span>
+        <p className="project-description">{project.description}</p>
+        <p className="project-tags">{project.tags.join(', ')}</p>
+        <div className="project-meta">
           <a href={project.link} target="_blank" rel="noreferrer">
-            {address}
+            Abrir o site
           </a>
-        )}
-        {project.repo && (
-          <a href={project.repo} target="_blank" rel="noreferrer">
-            Ver código
-          </a>
-        )}
+          {project.repo && (
+            <a href={project.repo} target="_blank" rel="noreferrer">
+              Ver código
+            </a>
+          )}
+        </div>
       </div>
     </article>
   )

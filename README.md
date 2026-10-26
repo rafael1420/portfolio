@@ -34,6 +34,7 @@ npm run preview  # testa localmente a versão gerada pelo build
 | Textos, projetos, habilidades, links | `src/data.js` |
 | Foto do início | `public/foto.jpg` (se não existir, aparecem as iniciais "RG") |
 | Currículo para download | `public/curriculo.pdf` |
+| Capturas dos projetos | `public/projetos/` (800x500), ligadas pelo campo `image` em `src/data.js` |
 | Cores e fontes | `src/styles.css` (variáveis no topo) |
 | Título e descrição da página | `index.html` |
 
