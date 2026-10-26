@@ -10,7 +10,7 @@ export const profile = {
   greetings: ['Olá', 'Hello', 'Hola', 'Ciao'],
   title: 'Desenvolvedor Júnior em formação',
   // ✏️ Uma frase curta sobre você, que aparece abaixo do nome
-  tagline: 'Estudo Análise e Desenvolvimento de Sistemas no Rio de Janeiro e construo meus projetos para a web, agora com React.',
+  tagline: 'Estudo Análise e Desenvolvimento de Sistemas no Rio de Janeiro e construo aplicações web completas, do front-end em React ao back-end com Node.js, PHP e banco de dados.',
   location: 'Vila Isabel, Rio de Janeiro',
   photo: '/foto.jpg',
   resume: '/curriculo.pdf',
@@ -29,7 +29,8 @@ export const navLinks = [
 export const about = {
   lead: 'Estou no 5º período de Análise e Desenvolvimento de Sistemas e procuro minha primeira vaga como desenvolvedor júnior ou estagiário.',
   paragraphs: [
-    'Comecei pela base: HTML, CSS, JavaScript, Python e PHP, com Git e GitHub para versionar tudo. Agora estou estudando React, e este site é um dos resultados.',
+    'Comecei pela base: HTML, CSS, JavaScript, Python e PHP, com Git e GitHub para versionar tudo. Depois passei a construir projetos completos e colocá-los no ar: um app de notas no estilo do Notion em React e Node.js, um bolão entre amigos em PHP com MySQL e ferramentas que consomem APIs públicas.',
+    'Gosto de levar cada projeto do começo ao fim: pensar a interface, montar o back-end, cuidar do login e dos dados e publicar no meu próprio domínio.',
     'Falo inglês em nível avançado, além de espanhol e italiano. Isso me ajuda a ler documentação, acompanhar a comunidade e trabalhar com pessoas de outros lugares.',
   ],
 }
@@ -138,8 +139,12 @@ export const skillGroups = [
     items: [{ name: 'JavaScript' }, { name: 'Python' }, { name: 'PHP' }],
   },
   {
-    category: 'Web',
-    items: [{ name: 'HTML' }, { name: 'CSS' }, { name: 'React', status: 'em estudo' }],
+    category: 'Front-end',
+    items: [{ name: 'HTML' }, { name: 'CSS' }, { name: 'React' }],
+  },
+  {
+    category: 'Back-end e dados',
+    items: [{ name: 'Node.js' }, { name: 'MySQL / SQL' }, { name: 'APIs REST' }],
   },
   {
     category: 'Versionamento',
@@ -160,7 +165,7 @@ export const languages = [
 
 export const contact = {
   // ✏️ Frase que convida para o contato
-  intro: 'Procuro uma vaga de desenvolvedor júnior ou estágio. Se tiver uma oportunidade ou quiser conversar sobre um projeto, me escreva.',
+  intro: 'Procuro uma vaga de desenvolvedor júnior ou estágio, no front-end, no back-end ou nos dois. Se tiver uma oportunidade ou quiser conversar sobre um projeto, me escreva.',
   email: 'rafael.gomez2007@gmail.com',
   links: [
     { label: 'LinkedIn', value: 'linkedin.com/in/rafaelgomes3', href: 'https://www.linkedin.com/in/rafaelgomes3' },
