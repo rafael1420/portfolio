@@ -242,9 +242,13 @@ a:hover {
   display: inline-block;
   padding: 13px 24px;
   border-radius: 4px;
+  /* "font" e "cursor" para os <button> ficarem iguais aos links */
+  font: inherit;
   font-weight: 700;
+  line-height: 1.65;
   border: 2px solid var(--calcario);
   text-decoration: none;
+  cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
 }
 
@@ -259,6 +263,7 @@ a:hover {
 }
 
 .button-secondary {
+  background: transparent;
   color: var(--calcario);
 }
 
@@ -337,43 +342,6 @@ a:hover {
 
 .about-text p + p {
   margin-top: 16px;
-}
-
-/* ===== Formação ===== */
-.education-item {
-  display: grid;
-  grid-template-columns: 9rem 1fr;
-  gap: 4px 24px;
-  margin-bottom: 56px;
-}
-
-.education-period {
-  color: var(--pedra);
-  padding-top: 6px;
-}
-
-.education-item h3 {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.education-item p {
-  color: var(--pedra);
-}
-
-.course-list li {
-  display: grid;
-  grid-template-columns: 9rem 1fr auto;
-  gap: 4px 24px;
-  padding: 14px 0;
-  border-top: 1px solid var(--linha);
-}
-
-.course-year,
-.course-provider {
-  color: var(--pedra);
 }
 
 /* ===== Projetos ===== */
@@ -532,28 +500,163 @@ a:hover {
   font-size: 0.95rem;
 }
 
-/* ===== Habilidades ===== */
-.skills {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 32px;
-  margin-bottom: 72px;
+/* ===== Habilidades: abas ===== */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 40px;
+  /* A linha de base é uma sombra, para não gerar barra de rolagem */
+  box-shadow: inset 0 -1px var(--linha);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
 }
 
-.skills dt {
-  font-family: var(--font-display);
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.skills dd {
+/* A aba ativa ganha um traço de calcário embaixo, apoiado na linha */
+.tab {
+  flex: none;
+  padding: 10px 18px 12px;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
   color: var(--pedra);
-  padding: 3px 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
 }
 
-.skill-note {
-  font-style: italic;
+.tab:hover {
+  color: var(--calcario);
+}
+
+.tab[aria-selected='true'] {
+  color: var(--calcario);
+  border-bottom-color: var(--calcario);
+}
+
+.tab-panel {
+  animation: panel-in 0.25s ease-out;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ===== Tabela de tecnologias × projetos ===== */
+.tech-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tech-table caption {
+  caption-side: top;
+  text-align: left;
+  color: var(--pedra);
+  margin-bottom: 24px;
+}
+
+.tech-table thead th {
+  width: 7.5rem;
+  padding: 0 4px 16px;
+  text-align: center;
+  vertical-align: bottom;
+  font-weight: 400;
   font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.tech-table thead a {
+  color: var(--pedra);
+}
+
+.tech-table thead a:hover {
+  color: var(--calcario);
+}
+
+.tech-table tbody th[scope='row'] {
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 10px 16px 10px 0;
+}
+
+.tech-table td {
+  text-align: center;
+  padding: 10px 4px;
+}
+
+.tech-table .tech-note {
+  color: var(--pedra);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.tech-table tbody tr + tr {
+  border-top: 1px solid var(--linha);
+}
+
+/* Linha com o nome do grupo (Front-end, Back-end e dados...) */
+.tech-table .tech-group {
+  text-align: left;
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--pedra);
+  padding: 32px 0 8px;
+}
+
+.tech-table tbody:first-of-type .tech-group {
+  padding-top: 0;
+}
+
+.tech-table .stone {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+
+/* As pedras viram um pouco em ângulos diferentes, como na calçada */
+.tech-table td:nth-child(odd) .stone {
+  transform: rotate(6deg);
+}
+
+/* ===== Ferramentas ===== */
+.tool-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0 48px;
+}
+
+.tool-list li {
+  display: grid;
+  gap: 2px;
+  padding: 18px 0;
+  border-top: 1px solid var(--linha);
+}
+
+.tool-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.tool-detail {
+  color: var(--pedra);
+}
+
+/* Texto lido por leitores de tela, mas invisível na página */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 /* ===== Idiomas: o nível é desenhado como pedras ===== */
@@ -608,18 +711,11 @@ a:hover {
   margin-bottom: 24px;
 }
 
-.contact-email {
-  display: inline-block;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.4rem, 4.2vw, 3rem);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: var(--calcario);
-  word-break: break-word;
-  margin-bottom: 40px;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.18em;
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 48px;
 }
 
 .contact-links {
@@ -715,18 +811,35 @@ a:hover {
 }
 
 @media (max-width: 560px) {
-  .hero-actions .button {
+  .hero-actions .button,
+  .contact-actions .button {
     flex: 1 1 100%;
     text-align: center;
   }
 
-  .education-item,
-  .course-list li {
+  .language-list li {
     grid-template-columns: 1fr;
   }
 
-  .language-list li {
-    grid-template-columns: 1fr;
+  /* Colunas dos projetos mais estreitas para a tabela caber na tela */
+  .tech-table thead th {
+    width: 3.6rem;
+    font-size: 0.75rem;
+  }
+
+  .tech-table tbody th[scope='row'] {
+    font-size: 1rem;
+    padding-right: 8px;
+  }
+
+  .tech-table .stone {
+    width: 15px;
+    height: 15px;
+  }
+
+  .tab {
+    padding: 10px 12px 12px;
+    font-size: 1rem;
   }
 }
 
@@ -737,7 +850,8 @@ a:hover {
   }
 
   .hero-greeting span,
-  .wave {
+  .wave,
+  .tab-panel {
     animation: none;
   }
 }

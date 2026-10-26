@@ -19,7 +19,6 @@ export const profile = {
 // Links do menu. O "id" precisa ser igual ao id da seção correspondente.
 export const navLinks = [
   { id: 'sobre', label: 'Sobre' },
-  { id: 'formacao', label: 'Formação' },
   { id: 'projetos', label: 'Projetos' },
   { id: 'habilidades', label: 'Habilidades' },
   { id: 'contato', label: 'Contato' },
@@ -35,26 +34,11 @@ export const about = {
   ],
 }
 
-export const education = [
-  {
-    period: '2024 – atual',
-    institution: 'Gran Faculdade',
-    course: 'Análise e Desenvolvimento de Sistemas',
-    detail: '5º período, em andamento',
-  },
-]
-
-export const courses = [
-  { year: '2024', name: 'Python', provider: 'Curso em Vídeo' },
-  { year: '2024', name: 'HTML e CSS básico', provider: 'Udemy e Curso em Vídeo' },
-  { year: '2024', name: 'JavaScript básico', provider: 'Curso em Vídeo' },
-  { year: '2024', name: 'Introdução ao Git e GitHub', provider: 'Curso em Vídeo' },
-]
-
 // Para adicionar um projeto, copie um objeto e altere os campos.
 // - link: endereço do projeto publicado (ex.: 'https://tarefas.rafaelgomes.site')
 // - repo: link do código no GitHub
 // - image: captura de tela do projeto, salva em public/projetos/ (800x500)
+// - shortTitle: nome curto opcional, usado na tabela de Habilidades
 // - status: deixe '' quando o projeto estiver publicado, ou 'Em desenvolvimento'
 // Deixe '' (vazio) nos campos que ainda não tiver.
 export const projects = [
@@ -90,6 +74,7 @@ export const projects = [
   },
   {
     title: 'Gerador de QR Code',
+    shortTitle: 'QR Code',
     year: '2026',
     description: 'Transforma textos e links em QR Codes com tamanho, cores e correção de erro ajustáveis, para baixar em PNG ou SVG.',
     tags: ['JavaScript', 'API', 'CSS'],
@@ -136,29 +121,41 @@ export const projects = [
   },
 ]
 
-// Habilidades agrupadas por categoria.
-// "status" é opcional: aparece ao lado do nome (ex.: 'em estudo').
+// Habilidades da aba "Tecnologias", agrupadas por categoria.
+// O site marca uma pedra em cada projeto publicado que tem essa tecnologia nas "tags".
+// "tag" só é preciso quando o nome aqui é diferente do usado nas tags (ex.: 'APIs REST' → 'API').
+// "everywhere: true" marca todos os projetos (HTML e CSS estão em qualquer site).
 export const skillGroups = [
   {
-    category: 'Linguagens',
-    items: [{ name: 'JavaScript' }, { name: 'Python' }, { name: 'PHP' }],
-  },
-  {
     category: 'Front-end',
-    items: [{ name: 'HTML' }, { name: 'CSS' }, { name: 'React' }],
+    items: [
+      { name: 'HTML', everywhere: true },
+      { name: 'CSS', everywhere: true },
+      { name: 'JavaScript' },
+      { name: 'React' },
+    ],
   },
   {
     category: 'Back-end e dados',
-    items: [{ name: 'Node.js' }, { name: 'MySQL / SQL' }, { name: 'APIs REST' }],
+    items: [
+      { name: 'Node.js' },
+      { name: 'PHP' },
+      { name: 'MySQL / SQL', tag: 'MySQL' },
+      { name: 'APIs REST', tag: 'API' },
+    ],
   },
   {
-    category: 'Versionamento',
-    items: [{ name: 'Git' }, { name: 'GitHub' }],
+    category: 'Também estudei',
+    items: [{ name: 'Python' }],
   },
-  {
-    category: 'Ferramentas',
-    items: [{ name: 'VS Code' }, { name: 'Git Bash' }, { name: 'Terminal Linux e Windows' }],
-  },
+]
+
+// Aba "Ferramentas": o que uso no dia a dia para escrever, versionar e publicar código
+export const tools = [
+  { name: 'Git', detail: 'Versionamento de todos os projetos' },
+  { name: 'GitHub', detail: 'Repositórios e publicação automática' },
+  { name: 'VS Code', detail: 'Editor principal' },
+  { name: 'Terminal', detail: 'Linux, Windows e Git Bash' },
 ]
 
 // "score" vai de 1 a 3 e define quantas pedras ficam preenchidas
@@ -171,10 +168,13 @@ export const languages = [
 export const contact = {
   // ✏️ Frase que convida para o contato
   intro: 'Procuro uma vaga de desenvolvedor júnior ou estágio, no front-end, no back-end ou nos dois. Se tiver uma oportunidade ou quiser conversar sobre um projeto, me escreva.',
-  email: 'rafael.gomez2007@gmail.com',
+  // E-mail e WhatsApp ficam codificados (base64) para robôs não acharem no código.
+  // O endereço só é montado quando a pessoa clica no botão.
+  // Para trocar: no console do navegador, rode btoa('novo@email.com') e cole o resultado.
+  emailCode: 'cmFmYWVsLmdvbWV6MjAwN0BnbWFpbC5jb20=',
+  whatsappCode: 'NTUyMTk4NDg0MjY4Mg==',
   links: [
     { label: 'LinkedIn', value: 'linkedin.com/in/rafaelgomes3', href: 'https://www.linkedin.com/in/rafaelgomes3' },
     { label: 'GitHub', value: 'github.com/rafael1420', href: 'https://github.com/rafael1420' },
-    { label: 'Telefone', value: '+55 21 98484-2682', href: 'tel:+5521984842682' },
   ],
 }
